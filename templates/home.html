@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+<form action="{% url 'subir_archivos' %}" method="GET">
+    <ab>Para subir un archivo  <button id="ir-a-subir" type="submit" class="btn btn-success">Click aquí</button></ab>
+</form>
+
+{% block load %}
+{% endblock %}
+
+{% endblock %}
