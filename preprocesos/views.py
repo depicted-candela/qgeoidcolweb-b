@@ -11,12 +11,8 @@ def prjs_terrestres(request, *args, **kwargs):
 # Mostrar projectos de la base de datos
 def mostrar_prjs_terr(request, *args, **kwargs):
 
-    if request.method == "GET":
+    archs = SubirArchivo.objects.all()
 
-        archs = SubirArchivo.objects.all()
+    dicts = {arch.id: [arch.name, arch.detalles] for arch in archs}
 
-        dicts = [model_to_dict(arch) for arch in archs]
-
-        print(dicts)
-
-        return JsonResponse(dicts)
+    return JsonResponse(dicts)

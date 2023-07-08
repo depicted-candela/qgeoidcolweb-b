@@ -86,7 +86,7 @@ def entrar(request, *args, **kwargs):
 
             login(request, user)
 
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("home"))
 
         else:
 

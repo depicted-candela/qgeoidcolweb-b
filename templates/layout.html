@@ -5,15 +5,16 @@
 <html lang="en">
 
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}qGeoidCOL{% endblock %}</title>
         <link rel="icon" href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'dataentry/styles.css' %}">
-        <script src="{% static 'preprocesses/get_raw_projects.js' %}"></script>
         <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    
     </head>
 
     <body>
@@ -57,6 +58,7 @@
         
         <div class="body">
 
+            <br>
             <h3>Esta es la versión web de qGeoidCOL</h3>
 
             {% block body %}
