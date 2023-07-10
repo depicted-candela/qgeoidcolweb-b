@@ -14,7 +14,8 @@ class SubirArchivo(models.Model):
     OPCIONES = [
         ('nivelacion', 'Nivelación'),
         ('gravterrabs', 'Gravedad terrestre absoluta'),
-        ('gravterrabs', 'Gravedad terrestre relativa')
+        ('gravterrabs', 'Gravedad terrestre relativa'),
+        ('gravedades', 'Gravedades terrestres absolutas y relativas'),
     ]
 
     user = models.ForeignKey(

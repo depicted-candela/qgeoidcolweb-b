@@ -5,6 +5,7 @@
 <html lang="en">
 
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}qGeoidCOL{% endblock %}</title>
@@ -13,12 +14,13 @@
         <link rel="stylesheet" href="{% static 'dataentry/styles.css' %}">
         <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    
     </head>
 
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">qGeoidCOL</a>
+            <a class="navbar-brand" href="{% url 'home' %}">qGeoidCOL</a>
           
             <div>
                 <ul class="navbar-nav mr-auto">
@@ -56,6 +58,7 @@
         
         <div class="body">
 
+            <br>
             <h3>Esta es la versión web de qGeoidCOL</h3>
 
             {% block body %}

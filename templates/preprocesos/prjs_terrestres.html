@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div>
+
+        <ab>Para comenzar seleccione los archivos a utilizar: </ab>
+
+    </div>
+
+    <div>
+
+        <ul id="objs" class="list-group">
+            <ab><li class="list-group-item active">Archivos disponibles</li></ab>
+        </ul>
+
+    </div>
+
+    <script>
+
+        fetch('mostrar_prjs_terr', {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then(data => {
+                const array = Object.values(data);
+                const prjlist = document.getElementById('objs');
+                array.forEach(element => {
+
+                    const prj = document.createElement('ab');
+                    const li = document.createElement('li');
+                    li.classList.add('list-group-item');
+                    li.textContent = element[0] + ": " + element[1]
+                    prj.appendChild(li);
+                    prjlist.appendChild(prj);
+
+                });
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+            });
+        
+    </script>
+
+{% endblock %}
