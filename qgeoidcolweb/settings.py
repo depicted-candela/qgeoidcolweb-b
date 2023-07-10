@@ -54,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "qgeoidcolweb.urls"
@@ -126,10 +127,18 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dataentry/static/'),
+    os.path.join(BASE_DIR, 'dataentry/static/')
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# The api for the rest framework
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3001'
+]
+
+CORS_ALLOW_CREDENTIALS = True
