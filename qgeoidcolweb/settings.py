@@ -28,8 +28,7 @@ SECRET_KEY = "django-insecure-9fu(t#tsbkioyzlgz-=$aap%^b)^%a)nrt82kkx6uw5rr%49^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -137,8 +136,29 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # The api for the rest framework
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3001'
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'X-CSRFToken',
+    'Content-Type',
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]
+
+# # The list of trusted origins for unsafe requests
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+]
