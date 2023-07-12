@@ -6,11 +6,11 @@
 3. Conformar un equipo de trabajo orientado al desarrollo de software para unificar el procesamiento de datos de la división de geodesia del IGAC
 
 ## Contribuyentes
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
+ALL-CONTRIBUTORS-LIST:START
+prettier-ignore-start
+markdownlint-disable
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+markdownlint-restore
+prettier-ignore-end
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+ALL-CONTRIBUTORS-LIST:END
