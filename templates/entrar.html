@@ -2,23 +2,32 @@
 
 {% block body %}
 
-    <h2>Login</h2>
+    <h3>Ingresar al sistema</h3>
 
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'entrar' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Usuario">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Contraseña">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Entrar">
-    </form>
+    <div>
+        <h3>
 
-    No tienes una cuenta aún? <a href="{% url 'registro' %}">Regístrese aquí.</a>
+            <form action="{% url 'entrar' %}" method="post">
+
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="username" placeholder="Usuario">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Contraseña">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Entrar">
+
+            </form>
+
+        </h3>
+
+        <ab>No tienes una cuenta aún? <a href="{% url 'registro' %}">Regístrate aquí.</a></ab>
+
+    </div>
 
 {% endblock %}

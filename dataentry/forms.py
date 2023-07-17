@@ -11,7 +11,7 @@ class SubirArchivoForm(ModelForm):
         model = SubirArchivo
         fields = ['name', 'file', 'tipo', 'detalles']
         labels = {
-            'name': 'Nombre',
+            'name': 'Nombre (utilice minúsculas y no tildes)',
             'file': 'Archivo',
             'tipo': 'Tipo de proyecto',
             'detalles': 'Detalles'
