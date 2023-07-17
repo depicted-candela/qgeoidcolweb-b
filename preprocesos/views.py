@@ -8,6 +8,7 @@ from dataentry.models import SubirArchivo
 
 from .read import reader
 from .cleaner import Limpiadores
+from .joiner import Unificadores
 
 import json
 
@@ -53,23 +54,38 @@ def rcbr_args_prjs_trr(request):
 
         for thing in things:
 
-            print(thing.tipo, ': ', len(thing.df))
             limpiador = Limpiadores()
 
-            if thing.tipo == 'nivelacion':
-                limp = limpiador.limpiar_verticalmente(thing, 'Tipo_Coord', select='CALCULADA')
+            if thing.elipsoide.name == 'WGS 84' or thing.proyeccion == 'EPSG:4326':
+
+                if thing.tipo == 'nivelacion':
+                    temp_df = limpiador.limpiar_verticalmente(thing, 'Tipo_Coord', select='CALCULADA')
+                    thing.set_df_file_tipo(temp_df, thing.file, thing.tipo)
+                    temp_df = limpiador.limpiar_horizontalmente(thing, 'Nomenclatu', 'Altura_m_s')
+                
+                elif thing.tipo == 'gravterrabs':
+                    temp_df = limpiador.limpiar_verticalmente(thing, 'OBS', select = 'N/A')
+                    thing.set_df_file_tipo(temp_df, thing.file, thing.tipo)
+                    temp_df = limpiador.limpiar_horizontalmente(thing, 'COD_IGAC_S', 'GRAV')
+
+                elif thing.tipo == 'gravterrrel':
+                    temp_df = limpiador.limpiar_verticalmente(thing, 'Tipo_Coord', select='Calculada')
+                    thing.set_df_file_tipo(temp_df, thing.file, thing.tipo)
+                    temp_df = limpiador.limpiar_horizontalmente(thing, 'Nomenc', 'Grav_mGal')
+
+                else:
+                    raise ValueError(f"El tipo {thing.tipo} es no soportado")
             
-            elif thing.tipo == 'gravterrabs':
-                limp = limpiador.limpiar_verticalmente(thing, 'OBS', select = 'N/A')
-
-            elif thing.tipo == 'gravterrrel':
-                limp = limpiador.limpiar_verticalmente(thing, 'Tipo_Coord', select='Calculada')
-
             else:
-                pass
+                raise ValueError(f"La proyección {thing.proyeccion} es desconocida")
 
-            thing.set_df_file_tipo(limp, thing.file, thing.tipo)
-            print(thing, ': ', len(thing.df))
+
+            thing.set_df_file_tipo(temp_df, thing.file, thing.tipo)
+        
+        unificador = Unificadores()
+        grvs = unificador.unificar_verticalmente(things)
+
+        print(grvs.df)
 
         return JsonResponse({'message': 'Llegó'})
 

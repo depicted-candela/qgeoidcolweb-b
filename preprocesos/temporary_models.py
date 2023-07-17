@@ -11,13 +11,15 @@ class TempProject:
     VALID_TYPES = []
 
     ## Valores inicializadores
-    def __init__(self, file, df, tipo):
+    def __init__(self, file, df, tipo, proyeccion, elipsoide='None'):
         
         # Para validar tipos de formato de objetos de entrada
         if isinstance(file, FieldFile) and isinstance(df, pdf) and isinstance(tipo, str):
             
             self.__file = file
             self.__df = df
+            self.__proyeccion = proyeccion
+            self.__elipsoide = elipsoide
 
         ## Para validar tipo de proyecto
         if tipo in self.VALID_TYPES:
@@ -40,6 +42,16 @@ class TempProject:
     @property
     def tipo(self):
         return self.__tipo
+    
+    # Define la proyección como propiedad del objecto
+    @property
+    def proyeccion(self):
+        return self.__proyeccion
+    
+    # Define el elipsoide como propiedad del objecto
+    @property
+    def proyeccion(self):
+        return self.__elipsoide
     
 
     ## Reglas para tipo de dato
@@ -89,6 +101,16 @@ class TempProjectTerreno(TempProject):
     def tipo(self):
         return self._TempProject__tipo
     
+    # Define el tipo como propiedad del objecto
+    @property
+    def proyeccion(self):
+        return self._TempProject__proyeccion
+    
+    # Define el elipsoide como propiedad del objecto
+    @property
+    def elipsoide(self):
+        return self._TempProject__elipsoide
+
     # Resultado para la función print
     def __str__(self):
         return f"{self.file}"

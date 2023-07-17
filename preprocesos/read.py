@@ -11,6 +11,7 @@ BASE_URL = Path(__file__).resolve().parent.parent
 
 # Lector de archivos de gravimetría y altimetría
 def reader(prj):
+
     str_file = str(prj.file)
     os.chdir(BASE_URL)
     file_name, file_ext = os.path.splitext(str_file)
@@ -18,18 +19,16 @@ def reader(prj):
     ## Archivos .csv
     if file_ext == '.csv':
 
-        df = pd.read_csv(str_file, delimiter=',')
+        # df = pd.read_csv(str_file, delimiter=',')
+        raise ValueError("Esta posibilidad debe programarse para conocer el elipsoide y proyección")
 
-    # Archivos .shp o .gpkg
+    # Archivos .shp
     elif file_ext == '.zip':
 
         import zipfile
         import pandas as pd
         import geopandas as gpd
-            
-        ## Para crear archivos shx y dbf
-        from shapely.geometry import shape
-        import shapefile as shpf
+        from pyproj import CRS
 
         zip_file = str_file
         destination_folder = "media"
@@ -40,6 +39,9 @@ def reader(prj):
             # Extract all files to the destination folder
             zip_ref.extractall(destination_folder)
             gdf = gpd.read_file(str_file)
+            crs = gdf.crs
+            projection = CRS(crs).to_string()
+            elipsoide = CRS(crs).ellipsoid
             df = pd.DataFrame(gdf)
         
         # Delete the extracted files
@@ -48,6 +50,7 @@ def reader(prj):
             file_path = os.path.join(destination_folder, file_name)
             os.remove(file_path)
     
+    # Archivos .gpkg
     elif file_ext == '.gpkg':
 
         gdf = gpd.read_file(str_file)
@@ -63,8 +66,8 @@ def reader(prj):
         # Para objetos de clase Proyecto
         case 'nivelacion' | 'gravterrabs' | 'gravterrrel':
 
-            return TempProjectTerreno(prj.file, df, prj.tipo)
+            return TempProjectTerreno(prj.file, df, prj.tipo, projection, elipsoide)
 
         # Para objetos de clase RawProject
         case 'crudo-aereo':
-            return TempProjectAerea(prj.file, df, prj.tipo)
+            return TempProjectAerea(prj.file, df, prj.tipo, projection, elipsoide)
