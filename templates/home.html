@@ -2,14 +2,21 @@
 
 {% block body %}
 
+{% if user.is_authenticated %}
 
-<form action="{% url 'subir_archivos' %}" method="GET">
-    <ab>Para subir un archivo crudo  <button id="ir-a-subir" type="submit" class="btn btn-success">Click aquí</button></ab>
-</form>
+    <form action="{% url 'subir_archivos' %}" method="GET">
+        <ab>Para subir un archivo crudo  <button id="ir-a-subir" type="submit" class="btn btn-success">Click aquí</button></ab>
+    </form>
 
-<form action="{% url 'prjs_terrestres' %}" method="GET">
-    <ab>Para procesar archivos crudos en conjunto <button id="ir-a-subir" type="submit" class="btn btn-success">Click aquí</button></ab>
-</form>
+    <form action="{% url 'prjs_terrestres' %}" method="GET">
+        <ab>Para procesar archivos crudos en conjunto <button id="ir-a-subir" type="submit" class="btn btn-success">Click aquí</button></ab>
+    </form>
+
+{% else %}
+
+    <ab>Haz click <a href="{% url 'entrar' %}">aquí</a> para ingresar al sistema con tu usuario</ab>
+
+{% endif%}
 
 {% block load %}
 {% endblock %}

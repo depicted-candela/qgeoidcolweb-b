@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2>Registro</h2>
+    <h3>Registro</h3>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -28,7 +28,9 @@
             </form>
         
         </h3>
-        <a>¿Tiene ya una cuenta? <a href="{% url 'index' %}">Entre aquí.</a></a>
+
+        <ab>¿Tiene ya una cuenta? <a href="{% url 'entrar' %}">Entre aquí.</a></ab>
+
     </div>
 
 {% endblock %}
