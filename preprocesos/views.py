@@ -85,8 +85,6 @@ def rcbr_args_prjs_trr(request):
         unificador = Unificadores()
         grvs = unificador.unificar_verticalmente(things)
 
-        print(grvs.df)
-
         return JsonResponse({'message': 'Llegó'})
 
     else:
