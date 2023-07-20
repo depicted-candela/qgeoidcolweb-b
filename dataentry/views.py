@@ -1,12 +1,16 @@
 from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.db import IntegrityError
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .forms import SubirArchivoForm
 
 
-# Create your views here.
+# Inicio de la aplicación
 def home(request):
     return render(request, "home.html")
 

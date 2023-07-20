@@ -3,12 +3,16 @@ from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.gis.geos import GEOSGeometry
 
 from dataentry.models import SubirArchivo
 
 from .read import reader
 from .cleaner import Limpiadores
 from .joiner import Unificadores
+from .intersecter import Intersectadores
+from .models  import RawDataQuasiTerreno, RawProjectQuasiTerreno, TypeRawProjectQuasi
 
 import json
 
@@ -84,6 +88,46 @@ def rcbr_args_prjs_trr(request):
         
         unificador = Unificadores()
         grvs = unificador.unificar_verticalmente(things)
+        
+        intersectador = Intersectadores()
+        intersectado = intersectador.intersectar_nomenclatura(things[2], grvs)
+
+        intctdf = intersectado['df']
+        files = intersectado['files']
+
+        tp = TypeRawProjectQuasi.objects.get(tipo='gravedades_nivelacion')
+
+        rpqt = RawProjectQuasiTerreno()
+        rpqt.user = User.objects.last()
+        rpqt.proyecto = 'quasi-geoide'
+        rpqt.tipo_proyecto = tp
+        rpqt.tipo_intersection = 'nomenclatura'
+        rpqt.origen_coordenadas = 'nivelacion'
+        rpqt.archivo_origen = files
+        rpqt.save()
+
+        last_rpqt = RawProjectQuasiTerreno.objects.last()
+
+        intctdf = intctdf.values
+
+        size_lote = 100
+        filas_totales = intctdf.shape[0]
+
+        for i in range(0, filas_totales, size_lote):
+
+            lote = intctdf[i:i+size_lote]
+
+            objetos_modelo = [
+                RawDataQuasiTerreno(posicion=GEOSGeometry(i[1].wkt),
+                                    nomenclatura=i[0],
+                                    elevacion=i[2],
+                                    gravedad=i[3],
+                                    project=last_rpqt) for i in lote
+                                    ]
+            
+            RawDataQuasiTerreno.objects.bulk_create(objetos_modelo)
+
+        print("Hecho!")
 
         return JsonResponse({'message': 'Llegó'})
 

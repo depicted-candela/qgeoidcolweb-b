@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ WSGI_APPLICATION = "qgeoidcolweb.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": "qgeoidcol",
+        "NAME": "qgeoidcol-web",
         "USER": "postgres",
         "PASSWORD": "eidisJ",
         "HOST": "127.0.0.1",
@@ -139,7 +140,14 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# The api for the rest framework
+# THE API AND SETTINGS FOR THE REST FRAMEWORK
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -167,3 +175,4 @@ CORS_ORIGIN_WHITELIST = [
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
 ]
+

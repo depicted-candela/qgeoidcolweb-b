@@ -10,7 +10,7 @@ class Unificadores:
     ## Para unificar verticalmente una lista de dataframes
     def unificar_verticalmente(self, lst):
         
-        ## Si los proyectos son de tipo adecuado
+        ## Validez del tipo de proyectos
         lst = [l for l in lst if l.tipo == 'gravterrabs' or l.tipo == 'gravterrrel']
         unificador_vertical = traer_unificador_vertical(lst)
         df_unificado = unificador_vertical(lst)

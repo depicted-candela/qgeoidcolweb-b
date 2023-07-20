@@ -1,8 +1,8 @@
 from pandas.core.frame import DataFrame as pdf
 from django.db.models.fields.files import FieldFile
+from abc import ABC
 
-
-class TempProject:
+class TempProject(ABC):
 
     """
     Clase padre para proyectos temporales
