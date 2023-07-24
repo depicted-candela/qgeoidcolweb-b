@@ -3,16 +3,42 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
+from django.contrib.auth.models import User
+
+from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from .models import SubirArchivo
 from .forms import SubirArchivoForm
+from .serializers import ArchivoSerializer
 
 
 # Inicio de la aplicación
 def home(request):
     return render(request, "home.html")
+
+
+class RecibirDatosReactViewSet(APIView):
+
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, *args, **kwargs):
+
+        user = User.objects.last()
+        name = request.data['nombre'][0]
+        file = request.FILES.get("archivo")
+        tipo = request.data['tipo'][0]
+        detalles = request.data['detalle'][0]
+        SubirArchivo.objects.create(user=user, name=name, file=file,
+                                    tipo=tipo, detalles=detalles)
+        
+        return Response('Datos recibidos')
 
 
 # Para subir archivos crudos a la página web
@@ -32,6 +58,9 @@ def subir_archivos(request, *args, **kwargs):
 
             object = form.save(commit=False)
             object.user = request.user
+
+            print(object)
+
             object.save()
 
             return HttpResponseRedirect(reverse("home"))
