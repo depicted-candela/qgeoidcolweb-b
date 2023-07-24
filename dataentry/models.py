@@ -5,6 +5,9 @@ from django.db import models
 Modelos crudos
 """
 
+def upload_path(instance, filname):
+    return "/".join([str(instance.name), filname])
+
 class SubirArchivo(models.Model):
 
     """
@@ -27,7 +30,7 @@ class SubirArchivo(models.Model):
     ## Variables necesarias para entender el archivo
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, null=False)
-    file = models.FileField(upload_to='media/', null=False)
+    file = models.FileField(upload_to="media/", null=False)
     tipo = models.CharField(max_length=20, choices=OPCIONES, null=False)
     detalles = models.CharField(max_length=250, null=False)
 

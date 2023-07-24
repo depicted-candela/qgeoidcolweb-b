@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     "corsheaders",
     "dataentry",
     "preprocesos",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -83,14 +85,13 @@ WSGI_APPLICATION = "qgeoidcolweb.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": "qgeoidcol",
+        "NAME": "qgeoidcol-web",
         "USER": "postgres",
         "PASSWORD": "eidisJ",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
-
 
 
 # Password validation
@@ -110,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 
 # Internationalization
@@ -134,12 +134,21 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'dataentry/static/')
 ]
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# The api for the rest framework
+
+# THE API AND SETTINGS FOR THE REST FRAMEWORK
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -159,11 +168,12 @@ CORS_ALLOW_METHODS = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+## The list of trusted origins for unsafe requests
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:3000/*",
 ]
 
-# # The list of trusted origins for unsafe requests
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-]
+## ROOTS AND URLS TO LOAD FILES
+# MEDIA_URL = os.path.join(BASE_DIR, "media/")
+# MEDIA_ROOT = '/media/'

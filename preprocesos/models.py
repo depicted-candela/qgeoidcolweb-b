@@ -33,64 +33,14 @@ class TypeRawProjectQuasi(TypeRawProject):
         ('gravterrabs', 'Gravedad terrestre absoluta'),
         ('gravterrrel', 'Gravedad terrestre relativa'),
         ('gravedades', 'Gravedades terrestres absolutas y relativas'),
+        ('gravedades_nivelacion', 'Gravedades y nivelaciones intersectadas'),
     ]
 
-    tipo = models.CharField(max_length=15, choices=TIPOS, unique=True)
+    tipo = models.CharField(max_length=25, choices=TIPOS, unique=True)
 
     class Meta:
         verbose_name = 'tipo hijo del modelo quasi-geoidal'
         verbose_name_plural = 'tipos hijo del modelo quasi-geoidal'
-
-
-class RawData(models.Model):
-
-    """
-    Tabla padre relacionadora de datos con proyectos geodeśicos
-    """
-
-    id = models.AutoField(primary_key=True)
-    posicion = models.PointField(null=True, blank=True)
-
-    class Meta:
-        abstract = True
-        ordering = ('id',)
-        verbose_name = 'modelo padre de datos para proyecto geodeśico'
-        verbose_name_plural = 'modelos padre de datos para proyecto geodésico'
-    
-
-class RawDataQuasiTerreno(RawData):
-
-    """
-    Tabla hija relacionadora de datos terrestres crudos con proyectos crudos
-    para el modelo quasi-geoidal
-    """
-
-    elevacion = models.DecimalField(max_digits=10, decimal_places=3)
-    gravedad = models.DecimalField(max_digits=10, decimal_places=3)
-
-    class Meta:
-        verbose_name = 'modelo hijo terrestre de datos para el modelo quasi-geoidal'
-        verbose_name_plural = 'modelos hijos terrestres de datos para el modelo quasi-geoidal'
-
-
-class RawDataQuasiAerea(RawData):
-
-    """
-    Tabla hija relacionadora de datos aéreos crudos con proyectos crudos
-    para el modelo quasi-geoidal
-    """
-
-    spring = models.DecimalField(max_digits=10, decimal_places=3)
-    beam = models.DecimalField(max_digits=10, decimal_places=3)
-    acc_hor = models.DecimalField(max_digits=10, decimal_places=3)
-    acc_vert = models.DecimalField(max_digits=10, decimal_places=3)
-    eotvos = models.DecimalField(max_digits=10, decimal_places=3)
-    altitud = models.DecimalField(max_digits=10, decimal_places=3)
-    # Agregar demás variables necesarias
-
-    class Meta:
-        verbose_name = 'modelo hijo terrestre de datos para el modelo quasi-geoidal'
-        verbose_name_plural = 'modelos hijos terrestres de datos para el modelo quasi-geoidal'
 
 
 class RawProject(models.Model):
@@ -125,20 +75,29 @@ class RawProjectQuasiTerreno(RawProject):
         ('original', 'Original'),
         ('nomenclatura', 'Por nomenclatura'),
         ('coordenadas', 'Por coordenadas'),
-        ]
+    ]
+    
+    COORDENADAS_ORIGEN = [
+        ('original', 'Original'),
+        ('nivelacion', 'Coordenadas de nivelación'),
+        ('gravedad', 'Coordenadas de gravedad'),
+    ]
 
     user = models.ForeignKey(
         User,
-        related_name='proyectos_crudos_quasigeodales_terreno',
+        related_name='proyectos_crudos_quasigeodales_terreno_usuario',
         on_delete=models.PROTECT
     )
-    data = models.ForeignKey(
-        RawDataQuasiTerreno,
-        related_name='proyectos_crudos_quasi_geoidales',
-        on_delete=models.CASCADE,
-        blank=True,
+
+    tipo_proyecto = models.ForeignKey(
+        TypeRawProjectQuasi,
+        related_name='proyectos_crudos_quasigeodales_terreno_tipo_proyecto',
+        on_delete=models.CASCADE
     )
+
     tipo_intersection = models.CharField(max_length=20, choices=TIPO_INTERSECCION, default='original')
+    origen_coordenadas = models.CharField(max_length=20, choices=COORDENADAS_ORIGEN, default='original')
+    archivo_origen = models.CharField(max_length=1000, default='')
 
     class Meta:
         verbose_name = 'proyecto hijo terrestre crudo para el modelo quasi-geoidal'
@@ -157,13 +116,72 @@ class RawProjectQuasiAerea(RawProject):
         related_name='proyectos_crudos_quasigeodales_aerea',
         on_delete=models.PROTECT
     )
-    data = models.ForeignKey(
-        RawDataQuasiAerea,
+
+    class Meta:
+        verbose_name = 'proyecto hijo terrestre crudo para el modelo quasi-geoidal'
+        verbose_name_plural = 'proyectos hijos terrestres crudos para el modelo quasi-geoidal'
+
+
+class RawData(models.Model):
+
+    """
+    Tabla padre relacionadora de datos con proyectos geodeśicos
+    """
+
+    id = models.AutoField(primary_key=True)
+    posicion = models.PointField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
+        ordering = ('id',)
+        verbose_name = 'modelo padre de datos para proyecto geodeśico'
+        verbose_name_plural = 'modelos padre de datos para proyecto geodésico'
+    
+
+class RawDataQuasiTerreno(RawData):
+
+    """
+    Tabla hija relacionadora de datos terrestres crudos con proyectos crudos
+    para el modelo quasi-geoidal
+    """
+
+    nomenclatura = models.CharField(max_length=20, null=False)
+    elevacion = models.DecimalField(max_digits=10, decimal_places=3)
+    gravedad = models.DecimalField(max_digits=10, decimal_places=3)
+    project = models.ForeignKey(
+        RawProjectQuasiTerreno,
         related_name='proyectos_crudos_quasi_geoidales',
         on_delete=models.CASCADE,
         blank=True,
     )
 
     class Meta:
-        verbose_name = 'proyecto hijo terrestre crudo para el modelo quasi-geoidal'
-        verbose_name_plural = 'proyectos hijos terrestres crudos para el modelo quasi-geoidal'
+        verbose_name = 'modelo hijo terrestre de datos para el modelo quasi-geoidal'
+        verbose_name_plural = 'modelos hijos terrestres de datos para el modelo quasi-geoidal'
+
+
+class RawDataQuasiAerea(RawData):
+
+    """
+    Tabla hija relacionadora de datos aéreos crudos con proyectos crudos
+    para el modelo quasi-geoidal
+    """
+
+    spring = models.DecimalField(max_digits=10, decimal_places=3)
+    beam = models.DecimalField(max_digits=10, decimal_places=3)
+    acc_hor = models.DecimalField(max_digits=10, decimal_places=3)
+    acc_vert = models.DecimalField(max_digits=10, decimal_places=3)
+    eotvos = models.DecimalField(max_digits=10, decimal_places=3)
+    altitud = models.DecimalField(max_digits=10, decimal_places=3)
+    # Agregar demás variables necesarias
+
+    data = models.ForeignKey(
+        RawProjectQuasiAerea,
+        related_name='proyectos_crudos_quasi_geoidales',
+        on_delete=models.CASCADE,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = 'modelo hijo terrestre de datos para el modelo quasi-geoidal'
+        verbose_name_plural = 'modelos hijos terrestres de datos para el modelo quasi-geoidal'

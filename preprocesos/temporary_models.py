@@ -1,8 +1,8 @@
 from pandas.core.frame import DataFrame as pdf
 from django.db.models.fields.files import FieldFile
+from abc import ABC
 
-
-class TempProject:
+class TempProject(ABC):
 
     """
     Clase padre para proyectos temporales
@@ -14,7 +14,7 @@ class TempProject:
     def __init__(self, file, df, tipo, proyeccion, elipsoide='None'):
         
         # Para validar tipos de formato de objetos de entrada
-        if isinstance(file, FieldFile) and isinstance(df, pdf) and isinstance(tipo, str):
+        if isinstance(file, FieldFile) or isinstance(file, str) and isinstance(df, pdf) and isinstance(tipo, str):
             
             self.__file = file
             self.__df = df
