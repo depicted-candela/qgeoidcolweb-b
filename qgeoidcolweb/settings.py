@@ -175,5 +175,5 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 ## ROOTS AND URLS TO LOAD FILES
-MEDIA_URL = os.path.join(BASE_DIR, "media/")
-MEDIA_ROOT = '/media/'
+# MEDIA_URL = os.path.join(BASE_DIR, "media/")
+# MEDIA_ROOT = '/media/'
