@@ -6,17 +6,15 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
-from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+# from rest_framework_simplejwt.views import TokenObtainPairView
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import SubirArchivo
 from .forms import SubirArchivoForm
-from .serializers import ArchivoSerializer
 
 
 # Inicio de la aplicación
@@ -31,10 +29,10 @@ class RecibirDatosReactViewSet(APIView):
     def post(self, request, *args, **kwargs):
 
         user = User.objects.last()
-        name = request.data['nombre'][0]
+        name = request.data['nombre']
         file = request.FILES.get("archivo")
-        tipo = request.data['tipo'][0]
-        detalles = request.data['detalle'][0]
+        tipo = request.data['tipo']
+        detalles = request.data['detalle']
         SubirArchivo.objects.create(user=user, name=name, file=file,
                                     tipo=tipo, detalles=detalles)
         
