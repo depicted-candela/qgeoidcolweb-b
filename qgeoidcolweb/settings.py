@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-9fu(t#tsbkioyzlgz-=$aap%^b)^%a)nrt82kkx6uw5rr%49^q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -153,6 +153,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
+    'X-XSRFToken',
     'X-CSRFToken',
     'Content-Type',
 ]
@@ -170,10 +171,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ## The list of trusted origins for unsafe requests
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
     "http://localhost:3000/*",
 ]
 
 ## ROOTS AND URLS TO LOAD FILES
 # MEDIA_URL = os.path.join(BASE_DIR, "media/")
 # MEDIA_ROOT = '/media/'
+
+CSRF_COOKIE_SECURE = False
+

@@ -11,7 +11,7 @@ class Intersectadores:
     Clase para intersectar dataframes
     """
 
-    ## Constructtor de intersectador por nomenclatura
+    ## Constructor de intersectador por nomenclatura
     def intersectar_nomenclatura(self, prj1, prj2):
 
         intersectador_nomenclatura = traer_intersectador_nomenclatura(prj1, prj2)
