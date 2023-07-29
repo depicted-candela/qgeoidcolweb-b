@@ -9,7 +9,7 @@ from .read import reader
 from .cleaner import Limpiadores
 from .joiner import Unificadores
 from .intersecter import Intersectadores
-from .models  import RawDataQuasiTerreno, RawProjectQuasiTerreno, TypeRawProjectQuasi
+from .models import RawDataQuasiTerreno, RawProjectQuasiTerreno, TypeRawProjectQuasi
 
 
 class Herramientas:
@@ -87,7 +87,8 @@ def aunador_gravedades_relativa_absoluta_nivelacion(*args):
 
     ## Intersecta gravedades unificadas y nivelación
     intersectador = Intersectadores()
-    intersectado = intersectador.intersectar_nomenclatura(niv, grvs)
+
+    intersectado = intersectador.intersectar_nomenclatura(niv[0], grvs)
 
     ## Crea proyecto contenedor de metadatos para entradas del modelo
     ## quasigeoidal para observaciones en terreno
