@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "dataentry",
     "preprocesos",
+    "visual",
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
