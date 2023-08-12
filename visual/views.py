@@ -15,3 +15,12 @@ class getProjectNames(APIView):
         proyectos = serializers.serialize('json', proyectos)
 
         return JsonResponse({'proyectos': proyectos})
+
+class getDataProjects(APIView):
+
+    def post(self, request, *args, **kwargs):
+
+        data = pm.RawDataQuasiTerreno.objects.filter(project_id=1)
+        data = serializers.serialize('json', data)
+
+        return JsonResponse({'data': data})
