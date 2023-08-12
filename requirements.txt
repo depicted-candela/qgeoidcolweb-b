@@ -1,4 +1,6 @@
 """conda-forge"
+boule
+metpy
 geopandas
 pandas
 django

@@ -11,9 +11,6 @@ from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 from dataentry.models import SubirArchivo
 
 from .tools import Herramientas
-# from .models  import RawDataQuasiTerreno, RawProjectQuasiTerreno, TypeRawProjectQuasi
-
-import json
 
 
 class CsrfTokenView(APIView):
@@ -72,4 +69,4 @@ def recibir_info_preprocess(self, request, *args, **kwargs):
         tool = request.POST.get("tool")
         name = request.POST.get("item")
 
-        return JsonResponse({'message': 'Hecho'})
+        return JsonResponse({'message': 'Hecho!'})
