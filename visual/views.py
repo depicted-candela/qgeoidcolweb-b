@@ -20,9 +20,15 @@ class getDataProjects(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        print(request.POST.get("id"))
+        print(request.POST.get('id'))
 
-        data = pm.RawDataQuasiTerreno.objects.filter(project_id=request.POST.get("id"))
-        data = serializers.serialize('json', data)
+        try:
+
+            data = pm.RawDataQuasiTerreno.objects.filter(project_id=request.POST.get('id'))
+            data = serializers.serialize('json', data)
+
+        except:
+
+            data = None
 
         return JsonResponse({'data': data})
