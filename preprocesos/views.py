@@ -55,8 +55,6 @@ class RecibirInfoPreprocess(APIView):
         herramientas = Herramientas()
         hr = herramientas.aunar_producto(tool, *items)
 
-        print(hr)
-
         return JsonResponse({'message': 'Hecho'})
 
 
