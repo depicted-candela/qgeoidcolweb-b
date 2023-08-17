@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.core import serializers
 from django.http import JsonResponse
 
+from rest_framework.views import APIView
+
 from preprocesos import models as pm
 
-from rest_framework.views import APIView
+import json
 
 
 class getProjectNames(APIView):
@@ -20,11 +22,12 @@ class getDataProjects(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        print(request.POST.get('id'))
+        var = json.loads(request.body.decode('utf-8'))['id']
 
         try:
 
-            data = pm.RawDataQuasiTerreno.objects.filter(project_id=request.POST.get('id'))
+            data = pm.RawDataQuasiTerreno.objects.filter(project_id=var)
+            # data = pm.RawDataQuasiTerreno.objects.filter(id__in=id_list)
             data = serializers.serialize('json', data)
 
         except:
