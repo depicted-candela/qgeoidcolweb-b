@@ -26,7 +26,6 @@ class getDataProjects(APIView):
 
             var = json.loads(request.body.decode('utf-8'))['id']
             data = pm.RawDataQuasiTerreno.objects.filter(project_id__in=var)
-            print(data)
             data = serializers.serialize('json', data)
 
         except:
