@@ -22,12 +22,11 @@ class getDataProjects(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        var = json.loads(request.body.decode('utf-8'))['id']
-
         try:
 
-            data = pm.RawDataQuasiTerreno.objects.filter(project_id=var)
-            # data = pm.RawDataQuasiTerreno.objects.filter(id__in=id_list)
+            var = json.loads(request.body.decode('utf-8'))['id']
+            data = pm.RawDataQuasiTerreno.objects.filter(project_id__in=var)
+            print(data)
             data = serializers.serialize('json', data)
 
         except:
