@@ -1,6 +1,4 @@
 # conda-forge packages
--boule
--metpy
 -geopandas
 -pandas
 -django
@@ -9,4 +7,3 @@
 -django-cors-headers
 -djangorestframework
 -djangorestframework-gis
--djangorestframework_simplejwt
