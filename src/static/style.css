@@ -1,0 +1,43 @@
+.selectable {
+    width: 80%;
+}
+
+#leaflet-map {
+    width: 40%;
+    height: 500px; /* Set an appropriate height */
+}
+
+.container-fluid {
+    padding: 0%;
+}
+
+.flex-container {
+    display: flex;
+    height: 100%;
+}
+
+.left-panel {
+    flex: 1;
+    padding: 20px;
+}
+
+
+@media (max-width: 500px) {
+
+    .flex-container {
+        flex-direction: column;
+    }
+    .left-panel {
+        width: 60%;
+        padding: 20px;
+        margin-left: 20px;
+        height: 100%;
+    }
+    #leaflet-map {
+        width: 80%;
+        margin-left: 50px;
+        margin-right: 50px;
+        height: 400px;
+    }
+
+}

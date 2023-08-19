@@ -1,12 +1,12 @@
-"""conda-forge"
-boule
-metpy
-geopandas
-pandas
-django
-psycopg2
-django-extensions
-django-cors-headers
-djangorestframework
-djangorestframework-gis
-djangorestframework_simplejwt
+# conda-forge packages
+-boule
+-metpy
+-geopandas
+-pandas
+-django
+-psycopg2
+-django-extensions
+-django-cors-headers
+-djangorestframework
+-djangorestframework-gis
+-djangorestframework_simplejwt
