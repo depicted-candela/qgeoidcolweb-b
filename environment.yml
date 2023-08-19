@@ -1,0 +1,16 @@
+# conda-forge packages
+
+name: myenv
+channels:
+  - conda-forge
+dependencies:
+  - boule
+  - geopandas
+  - pandas
+  - pandas
+  - django
+  - psycopg2
+  - django-extensions
+  - django-cors-headers
+  - djangorestframework
+  - djangorestframework-gis
